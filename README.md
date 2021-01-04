@@ -26,6 +26,11 @@ Score    int64     `json:"score" name:"分数" index:"2"`
 Birthday time.Time `json:"birthday" name:"生日" index:"4"`
 }
 ```
+如果要执行案例,先引入案例依赖
+```shell
+go get  github.com/360EntSecGroup-Skylar/excelize/v2
+go get  github.com/mitchellh/mapstructure
+```
 具体案例如下 或 看测试文件 
 
 ```go
