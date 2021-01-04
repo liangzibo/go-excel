@@ -9,7 +9,7 @@ go excel
 ```bash
 go get github.com/liangzibo/go-excel
 ```
-结构体中 `json`,`index` 必须存在
+结构体TAG 中 `json`,`index` 必须存在
 
 json: 字段名称
 
