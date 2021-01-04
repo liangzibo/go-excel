@@ -12,7 +12,9 @@ go get github.com/liangzibo/go-excel
 结构体中 `json`,`index` 必须存在
 
 json: 字段名称
+
 index: 索引名称
+
 name: 中文名称
 
 # 案例
