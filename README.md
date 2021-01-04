@@ -9,7 +9,21 @@ go excel
 ```bash
 go get github.com/liangzibo/go-excel
 ```
+结构体中 `json`,`index` 必须存在
 
+json: 字段名称
+index: 索引名称
+name: 中文名称
+
+# 案例
+```go
+type ExcelTest struct {
+Name     string    `json:"name" name:"名称" index:"0"`
+Age      int64     `json:"age" name:"年龄" index:"1"`
+Score    int64     `json:"score" name:"分数" index:"2"`
+Birthday time.Time `json:"birthday" name:"生日" index:"4"`
+}
+```
 具体案例如下 或 看测试文件 
 
 ```go
