@@ -1,4 +1,4 @@
-package lzbExcel
+package main
 
 import "time"
 

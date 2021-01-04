@@ -47,8 +47,8 @@ go get  github.com/mitchellh/mapstructure
     }
     //结果在  arr 中
     var arr []lzbExcel.ExcelTest
-    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&lzbExcel.ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
-        var ptr lzbExcel.ExcelTest
+    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+        var ptr ExcelTest
 		// map 转 结构体
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
             return err2
@@ -63,11 +63,11 @@ go get  github.com/mitchellh/mapstructure
     fmt.Println(arr)
     
     //结果在  arr 中
-    var arr2 []lzbExcel.ExcelTest
+    var arr2 []ExcelTest
     //StartRow 开始行,索引从 0开始
     //IndexMax  索引最大行,如果 结构体中的 index 大于配置的,那么使用结构体中的
-    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&lzbExcel.ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
-        var ptr lzbExcel.ExcelTest
+    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+        var ptr ExcelTest
 		// map 转 结构体
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
             return err2
