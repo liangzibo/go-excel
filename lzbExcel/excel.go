@@ -117,7 +117,7 @@ func (c *ExcelStruct) SetPointerStruct(ptr interface{}) *ExcelStruct {
 }
 
 //行处理
-func (c *ExcelStruct) RowsProcess2(rows [][]string, callback Callback) error {
+func (c *ExcelStruct) RowsProcess(rows [][]string, callback Callback) error {
 	if c.Fields == nil {
 		return fmt.Errorf("请填写结构体指针")
 	}
