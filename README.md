@@ -46,7 +46,7 @@ go get  github.com/mitchellh/mapstructure
         os.Exit(1)
     }
     //结果在  arr 中
-    var arr []lzbExcel.ExcelTest
+    var arr []ExcelTest
     err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
         var ptr ExcelTest
 		// map 转 结构体
