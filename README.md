@@ -1,8 +1,12 @@
 # go-excel
 go excel
 
+待转换的数据 类型 为  [][]string,都可以转换为结构体
+
 # go excel 处理,返回结构体数组
 核心部分 没有使用任何 第三方包,引入第三方包都是测试和转换使用的
+
+待转换的数据 类型 为  [][]string,都可以转换为结构体
 
 # 使用方式
 项目中执行引入包
@@ -13,9 +17,9 @@ go get github.com/liangzibo/go-excel
 
 json: 字段名称
 
-index: 索引名称
+index: 索序号
 
-name: 中文名称
+name: 名称
 
 # 案例
 ```go
@@ -61,7 +65,7 @@ go get  github.com/mitchellh/mapstructure
         os.Exit(1)
     }
     fmt.Println(arr)
-    
+    //rows 为[][]string 类型
     //结果在  arr 中
     var arr2 []ExcelTest
     //StartRow 开始行,索引从 0开始
@@ -87,3 +91,23 @@ go get  github.com/mitchellh/mapstructure
 [{张三 30 100 1999-02-01 15:20:31 +0800 CST} {李四 31 99 0001-01-01 00:00:00 +0000 UTC} {王五 33 0 0001-01-01 00:00:00 +0000 UTC}]
 [{张三 30 100 1999-02-01 15:20:31 +0800 CST} {李四 31 99 0001-01-01 00:00:00 +0000 UTC} {王五 33 0 0001-01-01 00:00:00 +0000 UTC}]
 ```
+
+
+# Go excel processing, return structure array
+The core part does not use any third-party packages, and the introduction of third-party packages is used for testing and transformation
+
+The data type to be converted is [][]string, which can be converted to struct
+
+
+# Usage
+Execute the import package in the project
+```bash
+go get github.com/liangzibo/go-excel
+```
+struct TAG 中 `json`,`index` Must exist
+
+json: Field name
+
+index: Index ordinal
+
+name: name
