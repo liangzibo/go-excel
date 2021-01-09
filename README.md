@@ -51,7 +51,7 @@ go get  github.com/mitchellh/mapstructure
     }
     //结果在  arr 中
     var arr []ExcelTest
-    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsAllProcess(rows, func(maps map[string]interface{}) error {
         var ptr ExcelTest
 		// map 转 结构体
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
@@ -70,7 +70,7 @@ go get  github.com/mitchellh/mapstructure
     var arr2 []ExcelTest
     //StartRow 开始行,索引从 0开始
     //IndexMax  索引最大行,如果 结构体中的 index 大于配置的,那么使用结构体中的
-    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&ExcelTest{}).RowsAllProcess(rows, func(maps map[string]interface{}) error {
         var ptr ExcelTest
 		// map 转 结构体
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
@@ -143,7 +143,7 @@ Specific cases are as follows or see the test file
     }
     //result  arr
     var arr []ExcelTest
-    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+    err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsAllProcess(rows, func(maps map[string]interface{}) error {
         var ptr ExcelTest
 		// map to struct
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
@@ -162,7 +162,7 @@ Specific cases are as follows or see the test file
     var arr2 []ExcelTest
     //StartRow starts row, index starts from 0
     //IndexMax index the maximum row, if the index in the structure is larger than the configured, then use the structure in the
-    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&ExcelTest{}).RowsProcess(rows, func(maps map[string]interface{}) error {
+    err = lzbExcel.NewExcelStruct(1, 10).SetPointerStruct(&ExcelTest{}).RowsAllProcess(rows, func(maps map[string]interface{}) error {
         var ptr ExcelTest
 		// map to struct
         if err2 := mapstructure.Decode(maps, &ptr); err2 != nil {
