@@ -20,6 +20,19 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	//
+	//var demoAll = [][]string{
+	//	{"赵三",
+	//		"30",
+	//		"100",
+	//		"1970-01-01 12:50:01",
+	//		"1980-11-21 15:20:01"},
+	//	{"赵六",
+	//		"40",
+	//		"30",
+	//		"1970-01-01 12:50:01",
+	//		"1980-11-21 15:20:01"},
+	//}
 	//结果在  arr 中
 	var arr []ExcelTest
 	err = lzbExcel.NewExcelStructDefault().SetPointerStruct(&ExcelTest{}).RowsAllProcess(rows, func(maps map[string]interface{}) error {

@@ -37,6 +37,22 @@ go get  github.com/mitchellh/mapstructure
 ```
 具体案例如下 或 看测试文件 
 
+excel 读取 出的格式如下
+```go
+var demoAll = [][]string{
+		{"赵三",
+			"30",
+			"100",
+			"1970-01-01 12:50:01",
+			"1980-11-21 15:20:01"},
+		{"赵六",
+			"40",
+			"30",
+			"1970-01-01 12:50:01",
+			"1980-11-21 15:20:01"},
+	}
+```
+
 ```go
 	xlsx, err := excelize.OpenFile("./excel.xlsx")
     if err != nil {
