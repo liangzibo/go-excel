@@ -143,6 +143,12 @@ func (c *ExcelStruct) SetPointerStruct(ptr interface{}) *ExcelStruct {
 //process
 //处理
 func (c *ExcelStruct) RowsProcess(rows [][]string, callback Callback) error {
+	return c.RowsAllProcess(rows, callback)
+}
+
+//process
+//处理
+func (c *ExcelStruct) RowsAllProcess(rows [][]string, callback Callback) error {
 	if c.Fields == nil {
 		//Please fill in the structure pointer
 		return fmt.Errorf("请填写结构体指针")
@@ -157,195 +163,10 @@ func (c *ExcelStruct) RowsProcess(rows [][]string, callback Callback) error {
 		if index < c.StartRow {
 			continue
 		}
-		maps := make(map[string]interface{})
-		for i, colCell := range row {
-			//Cannot judge null value, otherwise
-			//不能判断空值,否则
-			if len(colCell) < 1 {
-				continue
-			}
-			//Determine whether the key name exists
-			//判断键名是否存在
-			if field, ok := c.MapIndex[i]; ok {
-				maps[field] = ""
-				//Type conversion
-				//类型转换
-				fields := c.Fields[field]
-				//character
-				//字符
-				if fields.FieldType == "string" {
-					maps[field] = colCell
-					continue
-				}
-				//time
-				//时间
-				if fields.FieldType == "time.Time" && len(colCell) > 0 {
-					t, err := time.ParseInLocation(DATE_TIME_PATTERN, colCell, time.Local)
-					if err == nil {
-						maps[field] = t
-					} else {
-						//During type conversion, whether to directly prompt to report an error when an error occurs
-						//类型转换时候,产生错误时是否直接提示报错
-						if c.ConvertTypeErr {
-							return err
-						}
-					}
-				} else {
-					//other
-					//其他类型
-					switch fields.FieldType {
-					case "bool":
-						lower := strings.ToLower(colCell)
-						if lower == "true" {
-							maps[field] = true
-						} else {
-							maps[field] = false
-						}
-					case "int":
-						int, err := strconv.Atoi(colCell)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "int8":
-						int, err := strconv.ParseInt(colCell, 10, 8)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "int16":
-						int, err := strconv.ParseInt(colCell, 10, 16)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "int32":
-						int, err := strconv.ParseInt(colCell, 10, 32)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "int64":
-						int, err := strconv.ParseInt(colCell, 10, 64)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-						//fmt.Println("int64=", int)
-					case "uint":
-						int, err := strconv.Atoi(colCell)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = uint(int)
-						}
-					case "uint8":
-						int, err := strconv.ParseUint(colCell, 10, 8)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "uint16":
-						int, err := strconv.ParseUint(colCell, 10, 16)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "uint32":
-						int, err := strconv.ParseUint(colCell, 10, 32)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "uint64":
-						int, err := strconv.ParseUint(colCell, 10, 64)
-						if err != nil {
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "float32":
-						int, err := strconv.ParseFloat(colCell, 32)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "float64":
-						int, err := strconv.ParseFloat(colCell, 64)
-						if err != nil {
-							//During type conversion, whether to directly prompt to report an error when an error occurs
-							//类型转换时候,产生错误时是否直接提示报错
-							if c.ConvertTypeErr {
-								return err
-							}
-							maps[field] = 0
-						} else {
-							maps[field] = int
-						}
-					case "string":
-						maps[field] = colCell
-					}
-				}
-			}
+		//单行处理
+		maps, err := c.Row(row)
+		if err != nil {
+			return err
 		}
 		//json1, err := convUtil.ObjToJson(maps)
 		//if err != nil {
@@ -366,9 +187,9 @@ func (c *ExcelStruct) RowsProcess(rows [][]string, callback Callback) error {
 		//	return nil, err
 		//}
 		//data = append(data, ptr)
-		err := callback(maps)
-		if err != nil {
-			return err
+		err2 := callback(maps)
+		if err2 != nil {
+			return err2
 		}
 	}
 	return nil
@@ -376,13 +197,13 @@ func (c *ExcelStruct) RowsProcess(rows [][]string, callback Callback) error {
 
 //process row
 //处理 单行
-func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
+func (c *ExcelStruct) Row(row []string) (map[string]interface{}, error) {
 	if c.Fields == nil {
 		//Please fill in the structure pointer
-		return nil,fmt.Errorf("请填写结构体指针")
+		return nil, fmt.Errorf("请填写结构体指针")
 	}
 	if c.Err != nil {
-		return nil,c.Err
+		return nil, c.Err
 	}
 	maps := make(map[string]interface{})
 	for i, colCell := range row {
@@ -414,7 +235,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 					//During type conversion, whether to directly prompt to report an error when an error occurs
 					//类型转换时候,产生错误时是否直接提示报错
 					if c.ConvertTypeErr {
-						return nil,err
+						return nil, err
 					}
 				}
 			} else {
@@ -434,7 +255,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -446,7 +267,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -458,7 +279,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -470,7 +291,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -482,7 +303,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -495,7 +316,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -507,7 +328,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -519,7 +340,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -531,7 +352,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -550,7 +371,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -562,7 +383,7 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 						//During type conversion, whether to directly prompt to report an error when an error occurs
 						//类型转换时候,产生错误时是否直接提示报错
 						if c.ConvertTypeErr {
-							return nil,err
+							return nil, err
 						}
 						maps[field] = 0
 					} else {
@@ -574,5 +395,5 @@ func (c *ExcelStruct) Row(row []string) (map[string]interface{},error) {
 			}
 		}
 	}
-	return maps,nil
+	return maps, nil
 }
